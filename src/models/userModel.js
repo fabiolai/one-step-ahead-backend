@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    names: String,
+    firstName: String,
+    lastName: String,
     email: {
-      type: String,
+      type:String,
       unique: true,
       required: true,
     },
@@ -19,7 +20,6 @@ const userSchema = new mongoose.Schema(
     },
     age: Number,
     phone: String,
-    picture: String,
     role: {
       type: String,
       enum:["user", "admin"],
