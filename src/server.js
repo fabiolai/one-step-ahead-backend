@@ -1,13 +1,13 @@
 import express from "express";
 import "dotenv/config";
 import bodyParser from "body-parser";
-//import route from "./routes/index";
+import route from "./routes/index";
 import mongoose from "mongoose";
 
 const app = express();
 
 app.use(bodyParser.json());
-//app.use("/", route);
+app.use("/", route);
 const database = process.env.DATABASE;
 mongoose
   .connect(database, { useNewURLParser: true, useUnifiedTopology: true, 

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
+const therapistSchema = new mongoose.Schema(
   {
     firstName: String,
     lastName: String,
@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema(
       unique: true,
       required: true,
     },
-    password: String,
+    description:String,         
+    picture: String,
     address: {
       state: String,
       city: String,
@@ -18,20 +19,25 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum:["male", "female", "other"],
     },
-    age: Number,
     phone: String,
-    role: {
-      type: String,
-      enum:["user", "admin"],
-      default: "user",
-    },
     isActive: {
       type: Boolean,
       default: true,
     },
+    createdby:
+    {
+      type:mongoose.Schema.ObjectId,
+      ref:"User"
+
+    },
   },
   { timestamps: true }
 );
+therapistSchema.pre(/^find/, function(next){
+    this.populate({
+      path:"createdby",
+    })
+    next();})
 
-const User = mongoose.model("User",userSchema);
-export default User;
+const Therapist = mongoose.model("Therapist",therapistSchema);
+export default Therapist;

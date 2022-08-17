@@ -1,4 +1,5 @@
-import User from "../models/userModel";
+import UserModel from "../models/userModel";
+import HandlePassword from "../utils/handlepassord";
 
 
 class userService{
@@ -13,6 +14,7 @@ class userService{
     // signup
 
     static async signUpUser(req){
+        req.body.password = HandlePassword.encryptPassword(req.body.password)
         const user = await UserModel.create(req.body);
 
          return user;
@@ -22,10 +24,19 @@ class userService{
      //get users
 
      static async getUsers(){
-        const user = await UserModel.find();
+        const user = await UserModel.find(); 
          return user;
 
      }
+     // update user
+     static async updateUser(req){
+        const user = await UserModel.findByIdAndUpdate(req.params.id,req.body,{new:true});
+ 
+          return user;
+ 
+      }
+ 
+ 
 
 
 }
